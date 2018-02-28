@@ -13,8 +13,7 @@ cipher.iv = iv
 
 puts "create your message:"
 message = gets.chomp
-encrypted = cipher.update("#{message}")
-encrypted << cipher.final
+encrypted = cipher.update("#{message}") + cipher.final
 puts "encrypted: #{encrypted}"
 
 # decrypt it
