@@ -1,6 +1,7 @@
 require 'openssl'
 require 'digest'
 require 'securerandom'
+require 'base64'
 
 # encrypt a message
 cipher = OpenSSL::Cipher::AES256.new :CBC
@@ -10,7 +11,7 @@ puts "select your password:"
 @pass = gets.chomp
 
 # create a secure password
-salt = "o8p2FmFAxdXg8d0dGxJG"
+salt = SecureRandom.base64(20)
 secure = OpenSSL::PKCS5.pbkdf2_hmac_sha1(@pass, salt, 2000, cipher.key_len+cipher.iv_len)
 key = secure[0, cipher.key_len]
 iv = secure[cipher.key_len, cipher.iv_len]
