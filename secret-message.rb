@@ -1,14 +1,19 @@
 require 'openssl'
 require 'digest'
+require 'securerandom'
 
 # encrypt a message
 cipher = OpenSSL::Cipher::AES256.new :CBC
 cipher.encrypt
 
 puts "select your password:"
-pass = gets.chomp
-key = Digest::SHA256.digest("#{pass}")
-iv = cipher.random_iv
+@pass = gets.chomp
+
+# create a secure password
+salt = "o8p2FmFAxdXg8d0dGxJG"
+secure = OpenSSL::PKCS5.pbkdf2_hmac_sha1(@pass, salt, 2000, cipher.key_len+cipher.iv_len)
+key = secure[0, cipher.key_len]
+iv = secure[cipher.key_len, cipher.iv_len]
 
 cipher.key = key
 cipher.iv = iv
