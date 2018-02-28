@@ -8,7 +8,6 @@ cipher.encrypt
 puts "select your password:"
 pass = gets.chomp
 key = Digest::SHA256.digest("#{pass}")
-
 iv = cipher.random_iv
 
 cipher.key = key
