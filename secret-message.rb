@@ -22,6 +22,5 @@ cipher.decrypt
 cipher.key = key
 cipher.iv = iv
 
-decrypted = cipher.update(encrypted)
-decrypted << cipher.final
+decrypted = cipher.update(encrypted) + cipher.final
 puts "decrypted: #{decrypted}"
